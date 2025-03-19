@@ -1,95 +1,74 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+import { TIRAGE_MESSAGE } from "@/enums/tirageMessage";
+import { useState } from "react";
+import styled from "styled-components";
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [remainingNumbers, setRemainingNumbers] = useState([...Array(91).keys()]); // Nombres de 0 à 9 pour test
+  const [randomNumber, setRandomNumber] = useState<number | null>(null); // soit un nombre soit null
+  const [saveNumber, setSaveNumber] = useState<number[]>([]);
+  const [message, setMessage] = useState("");
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+  const handlePick = () => {
+    if (!remainingNumbers.length) return setMessage(TIRAGE_MESSAGE.TERMINATED);
+
+    const randomIndex = Math.floor(Math.random() * remainingNumbers.length); // index aléatoire compris entre 0 et le nombre de nombres restants défini par remainingNumbers
+    const pickNumber = remainingNumbers[randomIndex]; // nombre tiré aléatoirement parmi les nombres restants
+    const newRemainingNumbers = remainingNumbers.filter((num) => num !== pickNumber); // renvoie un nouveau tableau sans le nombre tiré
+
+    setSaveNumber((prev) => [...prev, pickNumber].sort((a, b) => a - b));
+
+    setRemainingNumbers(newRemainingNumbers);
+    setRandomNumber(pickNumber);
+    setMessage(newRemainingNumbers.length ? `${TIRAGE_MESSAGE.REMAINED} ${newRemainingNumbers.length}` : TIRAGE_MESSAGE.TERMINATED);
+  };
+
+  return (
+    <MainStyled>
+      <p>Nombre tiré : {randomNumber ?? "Aucun encore"}</p>
+      <p>{message}</p>
+      <input type="submit" value="Nouveau tirage" onClick={handlePick} disabled={!remainingNumbers.length} />
+
+      <div className="board-number">
+        {[...Array(91).keys()].map((num) => (
+          <div key={num} className={saveNumber.includes(num) ? "selected" : ""}>
+            {num}
+          </div>
+        ))}
+      </div>
+    </MainStyled>
   );
 }
+
+const MainStyled = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  .board-number {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 colonnes */
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .board-number div {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border: 1px solid black;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 5px;
+  }
+
+  .selected {
+    background: green !important; /* Numéros déjà tirés */
+    color: black;
+  }
+`;
