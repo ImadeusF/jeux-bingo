@@ -4,10 +4,15 @@ import { useState } from "react";
 import styled from "styled-components";
 
 export default function Home() {
-  const [remainingNumbers, setRemainingNumbers] = useState([...Array(91).keys()]); // Nombres de 0 à 9 pour test
-  const [randomNumber, setRandomNumber] = useState<number | null>(null); // soit un nombre soit null
+  const [remainingNumbers, setRemainingNumbers] = useState([...Array(90).keys()].map(i => i + 1)); // Nombres de 1 à 90
+  const [randomNumber, setRandomNumber] = useState<number | null>(null); 
   const [saveNumber, setSaveNumber] = useState<number[]>([]);
   const [message, setMessage] = useState("");
+
+  const playSound= (number: number) => {
+    const audio = new Audio(`/sounds/${number}.mp3`);
+    audio.play();
+  };
 
   const handlePick = () => {
     if (!remainingNumbers.length) return setMessage(TIRAGE_MESSAGE.TERMINATED);
@@ -21,6 +26,13 @@ export default function Home() {
     setRemainingNumbers(newRemainingNumbers);
     setRandomNumber(pickNumber);
     setMessage(newRemainingNumbers.length ? `${TIRAGE_MESSAGE.REMAINED} ${newRemainingNumbers.length}` : TIRAGE_MESSAGE.TERMINATED);
+
+    playSound(pickNumber);
+  };
+
+  const handleRepeat = () => {
+    if (!randomNumber) return;
+    playSound(randomNumber);
   };
 
   return (
@@ -28,11 +40,12 @@ export default function Home() {
       <p>Nombre tiré : {randomNumber ?? "Aucun encore"}</p>
       <p>{message}</p>
       <input type="submit" value="Nouveau tirage" onClick={handlePick} disabled={!remainingNumbers.length} />
+      <input type="submit" value="Repeter le chiffre" onClick={handleRepeat}  />
 
       <div className="board-number">
-        {[...Array(91).keys()].map((num) => (
-          <div key={num} className={saveNumber.includes(num) ? "selected" : ""}>
-            {num}
+        {[...Array(90).keys()].map((num) => (
+          <div key={num} className={saveNumber.includes(num + 1) ? "selected" : ""}>
+            {num + 1}
           </div>
         ))}
       </div>
