@@ -26,7 +26,7 @@ const HomeStyled = styled.main`
   &::before {
     content: "";
     position: absolute;
-    background: rgba(0, 0, 0, 0.7) url("/images/background_menu.png");
+    background: rgba(105, 105, 105, 0.9) url("/images/background_menu.png");
     background-size: cover;
     background-position: center;
     background-blend-mode: darken;

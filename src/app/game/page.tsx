@@ -77,7 +77,22 @@ const MainStyled = styled.main`
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  padding-top: 20px;
+  padding: 20px 0px;
+  position:relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    background: rgba(255, 255, 255, 0.5) url("/images/background_game.png");
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: darken;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+  }
 
   .board-header {
     height: 50px;
