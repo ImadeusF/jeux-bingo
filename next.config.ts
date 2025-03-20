@@ -1,7 +1,8 @@
-/** @type {import('next').NextConfig} */
+import type { NextConfig } from "next";
+
 const nextConfig = {
-  experimental: {
-    appDir: true, // Active App Router
+  compiler: {
+    styledComponents: true,
   },
 };
 
