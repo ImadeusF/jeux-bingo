@@ -6,7 +6,6 @@ export default function NotFound() {
   return (
     <NotFoundStyled>
       <h1>Page non trouvée</h1>
-      <p>Oups ! Cette page n'existe pas.</p>
       <Button label={"Retour à l'accueil"} href="/" />
     </NotFoundStyled>
   );
@@ -19,8 +18,8 @@ const NotFoundStyled = styled.div`
   justify-content: center;
   height: 100vh;
   text-align: center;
-  
-  p {
+
+  h1 {
     padding-bottom: 20px;
   }
 `;
