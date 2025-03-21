@@ -10,13 +10,11 @@ export async function GET() {
       });
       return NextResponse.json(logs, { status: 200 });
     } catch (error) {
-      console.error("ERREUR GET /api/logs :", error); 
-      return NextResponse.json(
-        { error: "Erreur lors de la récupération des logs" },
-        { status: 500 }
-      );
+      console.error("ERREUR GET /api/logs :", error); // 👈 Important
+      return NextResponse.json({ error: "Erreur lors de la récupération des logs" }, { status: 500 });
     }
   }
+  
 
 export async function POST()  {
     try {
