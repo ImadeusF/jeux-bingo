@@ -3,11 +3,25 @@ import Button from "@/components/Button";
 import styled from "styled-components";
 
 export default function Home() {
+  const handleStartGame = async () => {
+    try {
+      const response = await fetch("/api/logs", {
+        method: "POST",
+      });
+      if (!response.ok)
+        throw new Error("Erreur lors de l'enregistrement du log");
+
+      console.log("Log enregistré avec succès");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <HomeStyled>
       <h1>Accueil</h1>
-      <Button label={"Jouer"} href="/game" />
-      <Button label={"Historique"} href="/log" />
+      <Button label={"Jouer"} href="/game" onClick={handleStartGame} />
+      <Button label={"Historique"} href="/logs" />
     </HomeStyled>
   );
 }
