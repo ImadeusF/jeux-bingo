@@ -9,11 +9,12 @@ export async function GET() {
         return NextResponse.json(logs, { status: 200 });
     }
     catch (error) {
+        console.error(error);
         return NextResponse.json({ error: "Erreur lors de la récupération des logs"}, { status: 500 });
-    }
+      }
 }
 
-export async function POST(req : Request) {
+export async function POST(_: Request)  {
     try {
         const newLog = await prisma.game_log.create({
             data: {},
