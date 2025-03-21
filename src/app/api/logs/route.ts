@@ -14,7 +14,7 @@ export async function GET() {
       }
 }
 
-export async function POST(_: Request)  {
+export async function POST()  {
     try {
         const newLog = await prisma.game_log.create({
             data: {},
