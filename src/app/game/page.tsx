@@ -44,6 +44,21 @@ export default function Home() {
     playSound(randomNumber);
   };
 
+  const handleStartGame = async () => {
+    try {
+      const response = await fetch("/api/logs", {
+        method: "POST",
+      });
+      if (!response.ok)
+        throw new Error("Erreur lors de l'enregistrement du log");
+
+      console.log("Log enregistré avec succès");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
   return (
     <MainStyled>
       <div className="board-header">
@@ -67,18 +82,22 @@ export default function Home() {
           </div>
         ))}
       </div>
-      <Button label={"Retour à l'accueil"} href="/" />
+      <div className="game-footer">
+        <Button label={"Retour"} href="/" className="footer-btn-left"/>
+        <Button label={"Jeux Terminé"} href="/logs" onClick={handleStartGame} className="footer-btn-right"/>
+      </div>
     </MainStyled>
   );
 }
 
 const MainStyled = styled.main`
   display: flex;
+  height: 100dvh;
   flex-direction: column;
   align-items: center;
   gap: 10px;
   padding: 20px 0px;
-  position:relative;
+  position: relative;
 
   &::before {
     content: "";
@@ -122,5 +141,22 @@ const MainStyled = styled.main`
   .selected {
     background: #579c57 !important; /* Numéros déjà tirés */
     color: #ffffff;
+  }
+
+  .game-footer {
+    flex-direction: row;
+  }
+
+  .footer-btn-left, .footer-btn-right {
+    min-width: 120px;
+    padding:10px;
+    margin:10px;
+  }
+
+  .footer-btn-right {
+    background-color: #5c46d6;
+    &:hover{
+      background-color: #3b2f8c;
+    }
   }
 `;

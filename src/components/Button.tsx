@@ -6,9 +6,10 @@ type ButtonProps = {
   onClick?: () => void;
   disabled?: boolean;
   href?: string;
+  className?: string;
 };
 
-export default function Button({ label, onClick, disabled, href }: ButtonProps) {
+export default function Button({ label, onClick, disabled, href, className }: ButtonProps) {
   const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
     if (onClick) {
       event.preventDefault(); // Empêche la navigation immédiate
@@ -22,7 +23,7 @@ export default function Button({ label, onClick, disabled, href }: ButtonProps) 
   if (href) {
     return (
       <Link href={href} passHref>
-        <ButtonStyled as="button" onClick={handleClick} disabled={disabled}>
+        <ButtonStyled as="button" onClick={handleClick} disabled={disabled} className={className}>
           {label}
         </ButtonStyled>
       </Link>
@@ -30,7 +31,7 @@ export default function Button({ label, onClick, disabled, href }: ButtonProps) 
   }
 
   return (
-    <ButtonStyled onClick={onClick} disabled={disabled}>
+    <ButtonStyled onClick={onClick} disabled={disabled} className={className}>
       {label}
     </ButtonStyled>
   );
