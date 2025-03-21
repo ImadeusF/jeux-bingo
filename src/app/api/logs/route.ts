@@ -5,14 +5,18 @@ const prisma = new PrismaClient();
 
 export async function GET() {
     try {
-        const logs = await prisma.game_log.findMany({ orderBy: { createdAt: "desc" } });
-        return NextResponse.json(logs, { status: 200 });
+      const logs = await prisma.game_log.findMany({
+        orderBy: { createdAt: "desc" }
+      });
+      return NextResponse.json(logs, { status: 200 });
+    } catch (error) {
+      console.error("ERREUR GET /api/logs :", error); 
+      return NextResponse.json(
+        { error: "Erreur lors de la récupération des logs" },
+        { status: 500 }
+      );
     }
-    catch (error) {
-        console.error(error);
-        return NextResponse.json({ error: "Erreur lors de la récupération des logs"}, { status: 500 });
-      }
-}
+  }
 
 export async function POST()  {
     try {
