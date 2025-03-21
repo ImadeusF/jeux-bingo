@@ -3,27 +3,35 @@ import Link from "next/link";
 
 type ButtonProps = {
   label: string;
-  onClick?: () => void; // onClick devient optionnel
+  onClick?: () => void;
   disabled?: boolean;
-  href?: string; // Nouveau : permet d'utiliser Link
+  href?: string;
+  className?: string;
 };
 
-export default function Button({
-  label,
-  onClick,
-  disabled,
-  href,
-}: ButtonProps) {
+export default function Button({ label, onClick, disabled, href, className }: ButtonProps) {
+  const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (onClick) {
+      event.preventDefault(); // Empêche la navigation immédiate
+      await onClick(); // Attend l'exécution de l'action (log en base)
+      if (href) {
+        window.location.href = href; // Redirige après la requête
+      }
+    }
+  };
+
   if (href) {
     return (
       <Link href={href} passHref>
-        <ButtonStyled as="button">{label}</ButtonStyled>
+        <ButtonStyled as="button" onClick={handleClick} disabled={disabled} className={className}>
+          {label}
+        </ButtonStyled>
       </Link>
     );
   }
 
   return (
-    <ButtonStyled onClick={onClick} disabled={disabled}>
+    <ButtonStyled onClick={onClick} disabled={disabled} className={className}>
       {label}
     </ButtonStyled>
   );

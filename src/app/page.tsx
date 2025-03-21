@@ -7,13 +7,14 @@ export default function Home() {
     <HomeStyled>
       <h1>Accueil</h1>
       <Button label={"Jouer"} href="/game" />
-      <Button label={"Historique"} href="/log" />
+      <Button label={"Historique"} href="/logs" />
     </HomeStyled>
   );
 }
 
 const HomeStyled = styled.main`
   color: white;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   height: 100vh;
