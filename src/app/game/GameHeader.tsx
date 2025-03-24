@@ -14,24 +14,33 @@ export default function GameHeader() {
         <p>{message}</p>
       </div>
 
-      <Button
-        label={"Nouveau Tirage"}
-        onClick={handlePick}
-        disabled={!remainingNumbers.length}
-        className="header-btn-left"
-      />
-      <Button
-        label={"Répéter le chiffre"}
-        onClick={handleRepeat}
-        className="header-btn-right"
-      />
+      <div className="game-header">
+        <Button
+          label={"Nouveau Tirage"}
+          onClick={handlePick}
+          disabled={!remainingNumbers.length}
+          className="header-btn-left"
+        />
+        <Button
+          label={"Répéter le chiffre"}
+          onClick={handleRepeat}
+          className="header-btn-right"
+        />
+      </div>
     </GameHeaderStyled>
   );
 }
 
 const GameHeaderStyled = styled.div`
+  gap: 10px;
+  padding: 20px 20px;
   .board-header {
     height: 50px;
+  }
+
+  .game-header {
+    display: flex;
+    flex-direction: row;
   }
 
   .header-btn-left,
