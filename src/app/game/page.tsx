@@ -1,10 +1,10 @@
 "use client";
 import styled from "styled-components";
-import Button from "@/components/Button";
 import { useGame } from "../api/hooks/useGame";
 import GameHeader from "./GameHeader";
 import GameContext from "../context/GameContext";
 import GameBody from "./GameBody";
+import GameFooter from "./GameFooter";
 
 export default function Home() {
   const {
@@ -32,15 +32,7 @@ export default function Home() {
       <MainStyled>
         <GameHeader />
         <GameBody />
-        <div className="game-footer">
-          <Button label={"Retour"} href="/" className="footer-btn-left" />
-          <Button
-            label={"Jeux Terminé"}
-            href="/logs"
-            onClick={handleStartGame}
-            className="footer-btn-right"
-          />
-        </div>
+        <GameFooter />
       </MainStyled>
     </GameContext.Provider>
   );
@@ -67,23 +59,5 @@ const MainStyled = styled.main`
     right: 0;
     bottom: 0;
     z-index: -1;
-  }
-
-  .game-footer {
-    flex-direction: row;
-  }
-
-  .footer-btn-left,
-  .footer-btn-right {
-    min-width: 120px;
-    padding: 10px;
-    margin: 10px;
-  }
-
-  .footer-btn-right {
-    background-color: #5c46d6;
-    &:hover {
-      background-color: #3b2f8c;
-    }
   }
 `;
