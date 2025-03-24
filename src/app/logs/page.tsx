@@ -6,6 +6,8 @@ import { useGameLogs } from "../api/hooks/useGameLogs";
 export default function LogsPage() {
   const { logs, loading, error } = useGameLogs();
 
+  const noGame = logs.length === 0;
+
   return (
     <LogsContainer>
       <h1>Jeux Terminés :</h1>
@@ -15,6 +17,7 @@ export default function LogsPage() {
         </div>
       )}
       {error && <div className="error-message">{error}</div>}
+      {noGame && <div>Aucun jeu terminé</div>}
       {logs.map((log) => (
         <div key={log.id}>
           {new Date(log.createdAt).toLocaleString("fr-FR")}

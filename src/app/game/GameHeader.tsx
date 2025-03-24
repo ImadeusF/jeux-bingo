@@ -4,7 +4,8 @@ import styled from "styled-components";
 import GameContext from "../context/GameContext";
 
 export default function GameHeader() {
-  const { handlePick, handleRepeat, remainingNumbers, randomNumber, message } = useContext(GameContext);
+  const { handlePick, handleRepeat, remainingNumbers, randomNumber, message } =
+    useContext(GameContext);
 
   return (
     <GameHeaderStyled>
@@ -12,12 +13,18 @@ export default function GameHeader() {
         <p>Nombre tiré : {randomNumber ?? "Aucun encore"}</p>
         <p>{message}</p>
       </div>
+
       <Button
         label={"Nouveau Tirage"}
         onClick={handlePick}
         disabled={!remainingNumbers.length}
+        className="header-btn-left"
       />
-      <Button label={"Répéter le chiffre"} onClick={handleRepeat} />
+      <Button
+        label={"Répéter le chiffre"}
+        onClick={handleRepeat}
+        className="header-btn-right"
+      />
     </GameHeaderStyled>
   );
 }
@@ -25,5 +32,12 @@ export default function GameHeader() {
 const GameHeaderStyled = styled.div`
   .board-header {
     height: 50px;
+  }
+
+  .header-btn-left,
+  .header-btn-right {
+    min-width: 120px;
+    padding: 10px;
+    margin: 10px;
   }
 `;
