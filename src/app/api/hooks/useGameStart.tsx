@@ -1,7 +1,7 @@
 import { TIRAGE_MESSAGE } from "@/enums/tirageMessage";
 import { useState } from "react";
 
-export const useGame = () => {
+export const useGameStart = () => {
   const [remainingNumbers, setRemainingNumbers] = useState(
     [...Array(90).keys()].map((i) => i + 1)
   ); // Nombres de 1 à 90
@@ -36,20 +36,6 @@ export const useGame = () => {
     playSound(randomNumber);
   };
 
-  const handleStartGame = async () => {
-    try {
-      const response = await fetch("/api/logs", {
-        method: "POST",
-      });
-      if (!response.ok)
-        throw new Error("Erreur lors de l'enregistrement du log");
-
-      console.log("Log enregistré avec succès");
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const playSound = (number: number) => {
     const audio = new Audio(`/sounds/${number}.mp3`);
     audio.play();
@@ -58,7 +44,6 @@ export const useGame = () => {
   return {
     handlePick,
     handleRepeat,
-    handleStartGame,
     playSound,
     remainingNumbers,
     randomNumber,

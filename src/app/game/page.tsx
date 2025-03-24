@@ -1,6 +1,7 @@
 "use client";
 import styled from "styled-components";
-import { useGame } from "../api/hooks/useGame";
+import { useGameStart } from "../api/hooks/useGameStart";
+import { useGameLogs } from "../api/hooks/useGameLogs";
 import GameHeader from "./GameHeader";
 import GameContext from "../context/GameContext";
 import GameBody from "./GameBody";
@@ -10,17 +11,18 @@ export default function Home() {
   const {
     handlePick,
     handleRepeat,
-    handleStartGame,
     remainingNumbers,
     randomNumber,
     saveNumber,
     message,
-  } = useGame();
+  } = useGameStart();
+
+  const { handleGameLogs } = useGameLogs();
 
   const gameContextValue = {
     handlePick,
     handleRepeat,
-    handleStartGame,
+    handleGameLogs,
     remainingNumbers,
     randomNumber,
     saveNumber,

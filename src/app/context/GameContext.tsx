@@ -4,7 +4,7 @@ import { createContext } from "react";
 export interface GameContextType {
   handlePick: () => void;
   handleRepeat: () => void;
-  handleStartGame: () => void;
+  handleGameLogs: () => void;
   remainingNumbers: number[];
   randomNumber: number | null;
   saveNumber: number[];
@@ -14,7 +14,7 @@ export interface GameContextType {
 const GameContext = createContext<GameContextType>({
   handlePick: () => {},
   handleRepeat: () => {},
-  handleStartGame: () => {},
+  handleGameLogs: () => {},
   remainingNumbers: [],
   randomNumber: null,
   saveNumber: [],

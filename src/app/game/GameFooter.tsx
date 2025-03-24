@@ -4,7 +4,7 @@ import styled from "styled-components";
 import GameContext from "../context/GameContext";
 
 export default function GameFooter() {
-  const { handleStartGame } = useContext(GameContext);
+  const { handleGameLogs } = useContext(GameContext);
 
   return (
     <GameFooterStyled>
@@ -13,7 +13,7 @@ export default function GameFooter() {
         <Button
           label={"Jeux Terminé"}
           href="/logs"
-          onClick={handleStartGame}
+          onClick={handleGameLogs}
           className="footer-btn-right"
         />
       </div>
