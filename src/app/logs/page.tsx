@@ -1,50 +1,23 @@
 "use client";
-
 import Button from "@/components/Button";
-import { useEffect, useState } from "react";
 import styled from "styled-components";
-
-type Log = {
-  id: number;
-  createdAt: string;
-};
+import { useGameLogs } from "../api/hooks/useGameLogs";
 
 export default function LogsPage() {
-  const [logs, setLogs] = useState<Log[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { logs, loading, error } = useGameLogs();
 
-  useEffect(
-    () => {
-      const fetchLogs = async () => {
-        try {
-          const response = await fetch("/api/logs");
-          if (!response.ok) {
-            throw new Error("Erreur lors de la récupération des logs");
-          }
-          const data = await response.json();
-          setLogs(data);
-        } catch (err) {
-          if (err instanceof Error) {
-            setError(err.message);
-          } else {
-            setError("Une erreur inconnue est survenue");
-          }
-        } finally {
-          //s'exécute dans tous les cas
-          setLoading(false);
-        }
-      };
-      fetchLogs();
-    },
-    [] // [] pour exécuter le useEffect une seule fois au montage
-  );
+  const noGame = logs.length === 0;
 
   return (
     <LogsContainer>
       <h1>Jeux Terminés :</h1>
-      {loading && <div className="chargement-message"><h1>Chargement...</h1></div>}
+      {loading && (
+        <div className="chargement-message">
+          <h1>Chargement...</h1>
+        </div>
+      )}
       {error && <div className="error-message">{error}</div>}
+      {noGame && <div>Aucun jeu terminé</div>}
       {logs.map((log) => (
         <div key={log.id}>
           {new Date(log.createdAt).toLocaleString("fr-FR")}
