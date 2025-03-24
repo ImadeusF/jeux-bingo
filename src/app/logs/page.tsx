@@ -1,7 +1,7 @@
 "use client";
 import Button from "@/components/Button";
 import styled from "styled-components";
-import { useGameLogs } from "../api/hooks/useGameLogs";
+import { useGameLogs } from "../../hooks/useGameLogs";
 
 export default function LogsPage() {
   const { logs, loading, error } = useGameLogs();
