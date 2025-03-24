@@ -4,6 +4,7 @@ import Button from "@/components/Button";
 import { useGame } from "../api/hooks/useGame";
 import GameHeader from "./GameHeader";
 import GameContext from "../context/GameContext";
+import GameBody from "./GameBody";
 
 export default function Home() {
   const {
@@ -30,16 +31,7 @@ export default function Home() {
     <GameContext.Provider value={gameContextValue}>
       <MainStyled>
         <GameHeader />
-        <div className="board-number">
-          {[...Array(90).keys()].map((num) => (
-            <div
-              key={num}
-              className={saveNumber.includes(num + 1) ? "selected" : ""}
-            >
-              {num + 1}
-            </div>
-          ))}
-        </div>
+        <GameBody />
         <div className="game-footer">
           <Button label={"Retour"} href="/" className="footer-btn-left" />
           <Button
@@ -75,32 +67,6 @@ const MainStyled = styled.main`
     right: 0;
     bottom: 0;
     z-index: -1;
-  }
-
-  .board-number {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr); /* 7 colonnes */
-    gap: 10px;
-    padding: 10px;
-    border-radius: 10px;
-  }
-
-  .board-number div {
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: white;
-    border: 1px solid black;
-    font-size: 14px;
-    font-weight: bold;
-    border-radius: 5px;
-  }
-
-  .selected {
-    background: #579c57 !important; /* Numéros déjà tirés */
-    color: #ffffff;
   }
 
   .game-footer {
