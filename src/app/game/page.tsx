@@ -2,38 +2,55 @@
 import styled from "styled-components";
 import Button from "@/components/Button";
 import { useGame } from "../api/hooks/useGame";
+import GameHeader from "./GameHeader";
+import GameContext from "../context/GameContext";
 
 export default function Home() {
-  const { handlePick, handleRepeat, handleStartGame, remainingNumbers, randomNumber, saveNumber, message } = useGame();
- 
-  return (
-    <MainStyled>
-      <div className="board-header">
-        <p>Nombre tiré : {randomNumber ?? "Aucun encore"}</p>
-        <p>{message}</p>
-      </div>
-      <Button
-        label={"Nouveau Tirage"}
-        onClick={handlePick}
-        disabled={!remainingNumbers.length}
-      />
-      <Button label={"Répéter le chiffre"} onClick={handleRepeat} />
+  const {
+    handlePick,
+    handleRepeat,
+    handleStartGame,
+    remainingNumbers,
+    randomNumber,
+    saveNumber,
+    message,
+  } = useGame();
 
-      <div className="board-number">
-        {[...Array(90).keys()].map((num) => (
-          <div
-            key={num}
-            className={saveNumber.includes(num + 1) ? "selected" : ""}
-          >
-            {num + 1}
-          </div>
-        ))}
-      </div>
-      <div className="game-footer">
-        <Button label={"Retour"} href="/" className="footer-btn-left"/>
-        <Button label={"Jeux Terminé"} href="/logs" onClick={handleStartGame} className="footer-btn-right"/>
-      </div>
-    </MainStyled>
+  const gameContextValue = {
+    handlePick,
+    handleRepeat,
+    handleStartGame,
+    remainingNumbers,
+    randomNumber,
+    saveNumber,
+    message,
+  };
+
+  return (
+    <GameContext.Provider value={gameContextValue}>
+      <MainStyled>
+        <GameHeader />
+        <div className="board-number">
+          {[...Array(90).keys()].map((num) => (
+            <div
+              key={num}
+              className={saveNumber.includes(num + 1) ? "selected" : ""}
+            >
+              {num + 1}
+            </div>
+          ))}
+        </div>
+        <div className="game-footer">
+          <Button label={"Retour"} href="/" className="footer-btn-left" />
+          <Button
+            label={"Jeux Terminé"}
+            href="/logs"
+            onClick={handleStartGame}
+            className="footer-btn-right"
+          />
+        </div>
+      </MainStyled>
+    </GameContext.Provider>
   );
 }
 
@@ -58,10 +75,6 @@ const MainStyled = styled.main`
     right: 0;
     bottom: 0;
     z-index: -1;
-  }
-
-  .board-header {
-    height: 50px;
   }
 
   .board-number {
@@ -94,15 +107,16 @@ const MainStyled = styled.main`
     flex-direction: row;
   }
 
-  .footer-btn-left, .footer-btn-right {
+  .footer-btn-left,
+  .footer-btn-right {
     min-width: 120px;
-    padding:10px;
-    margin:10px;
+    padding: 10px;
+    margin: 10px;
   }
 
   .footer-btn-right {
     background-color: #5c46d6;
-    &:hover{
+    &:hover {
       background-color: #3b2f8c;
     }
   }
