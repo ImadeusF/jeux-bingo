@@ -1,7 +1,7 @@
 "use client";
 import styled from "styled-components";
-import { useGameStart } from "../api/hooks/useGameStart";
-import { useGameLogs } from "../api/hooks/useGameLogs";
+import { useGameStart } from "../../hooks/useGameStart";
+import { useGameLogs } from "../../hooks/useGameLogs";
 import GameHeader from "./GameHeader";
 import GameContext from "../../context/GameContext";
 import GameBody from "./GameBody";
