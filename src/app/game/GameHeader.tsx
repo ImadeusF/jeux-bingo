@@ -1,7 +1,7 @@
 import Button from "@/components/Button";
 import { useContext } from "react";
 import styled from "styled-components";
-import GameContext from "../context/GameContext";
+import GameContext from "../../context/GameContext";
 
 export default function GameHeader() {
   const { handlePick, handleRepeat, remainingNumbers, randomNumber, message } =
